@@ -1,10 +1,10 @@
 package com.noticeboard.mapper;
 
-import java.awt.List;
+import java.util.ArrayList;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
-
 import com.noticeboard.model.Notice;
 
 public class NoticeMapper {
@@ -25,8 +25,15 @@ public class NoticeMapper {
 	// convert DBObject Object to Books
 	// take special note of converting ObjectId to String
 	public static Notice toNotice(DBObject doc) {
-
+		BasicDBList list = (BasicDBList) doc.get("coordinates");
 		Notice notice = new Notice();
+		ArrayList<Float> coordList = new ArrayList<Float>();
+		if (list != null && list.size() > 0) {
+			for (Object item : list) {	
+				coordList.add((Float) item);
+			}
+		}
+
 		notice.setId((String) doc.get("id"));
 		notice.setTitle((String) doc.get("title"));
 		notice.setCatId((String) doc.get("catId"));
@@ -34,8 +41,7 @@ public class NoticeMapper {
 		notice.setDesc((String) doc.get("desc"));
 		notice.setEventDate((Long) doc.get("eventDate"));
 		notice.setPostedDate((Long) doc.get("postedDate"));
-		// notice.setCoordinates((Float)doc.get("coordinates"),
-		// (Float)doc.get("coordinates"));
+		notice.setCoordinates(coordList.get(0), coordList.get(1));
 		return notice;
 	}
 }

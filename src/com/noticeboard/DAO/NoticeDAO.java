@@ -48,13 +48,13 @@ public class NoticeDAO {
 		DBCursor cursor = col.find();
 		while (cursor.hasNext()) {
 			DBObject doc = cursor.next();
-			Notice p = NoticeMapper.toNotice(doc);
-			data.add(p);
+			Notice notice = NoticeMapper.toNotice(doc);
+			data.add(notice);
 		}
 		return data;
 	}
 
-	public void deletePerson(Notice notice) {
+	public void deleteNotice(Notice notice) {
 		DBObject query = BasicDBObjectBuilder.start()
 				.append("_id", new ObjectId(notice.getId())).get();
 		this.col.remove(query);
