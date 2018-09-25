@@ -1,10 +1,10 @@
 package com.noticeboard.model;
 
 public class Notice {
-	private String id, title, catId, deptId, desc;  
+	private String id, title;/*, catId, deptId, desc;  
 	private long eventDate, postedDate; //date stored as epoch
 	private float[] coordinates = new float[2]; //0-Latitude, 1-Longitude
-	
+*/	
 	public String getId() {
 		return this.id;
 	}
@@ -20,7 +20,7 @@ public class Notice {
 		this.title = title;
 	}
 	
-	public String getCatId() {
+	/*public String getCatId() {
 		return this.catId;
 	}
 	
@@ -67,5 +67,5 @@ public class Notice {
 	public void setCoordinates(float lat, float lng) {
 		this.coordinates[0] = lat;
 		this.coordinates[1] = lng;
-	}
+	}*/
 }

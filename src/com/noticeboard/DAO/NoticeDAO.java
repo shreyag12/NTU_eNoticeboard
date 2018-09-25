@@ -22,7 +22,7 @@ public class NoticeDAO {
 	
 	public NoticeDAO(MongoClient mongo) {
 
-        if(mongo==null){
+       if(mongo==null){
         	mongo = DAOConnection.getMongoClient();
         }
 
