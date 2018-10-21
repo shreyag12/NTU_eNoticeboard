@@ -1,0 +1,215 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<h1>Register an event</h1>
+	<title> Welcome to Register</title>
+<link rel = "stylesheet" type = "text/css" href = "css/admin.css">
+<script type = "text/javascript" src = "js/location.js"></script>
+<script type = "text/javascript" src= "js/admin.js"></script>
+<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script> 
+<br>
+<br>
+</head>
+<body>
+<form action = "noticeServlet" id="myForm" method = "post" enctype ="multipart/form-data">
+
+<tr>
+ <td>
+
+Event Title <input type="text" name="event"><br><br>
+Location<input type="text" id="location" placeholder="Search for location" ><br><br>
+<div id="map" style="width:300px;height:300px;background:yellow"></div>		
+<!-- <a href="javascript:void(0)" id = "dThreshold" onclick = "show()">Enter Address</a>-->
+<br>
+    <div id="address" style="display:none">
+       <div id="myDIV">
+	   <div class="col-sm-10">
+		<input type="text" class="form-control rounded"required  name="Address1" id="name"><br><br>
+		</div>
+		
+		<input type="text" class="form-control rounded"  name="Address2" id="state" title="Type in a name"><br><br>
+		<input type="text" class="form-control rounded"  name="city"  id="city" title="Type in a name"><br><br>
+		<input type="text" class="form-control rounded"  name="country"  id="Country" title="Type in a name">   
+		<input type="number"  name="Postcode" id="postal_code" title="Type in a name"><br><br>
+		<div id = "coordinate" style = "display:none">
+			<input type = "text" name = "lat">
+			<input type = "text" name = "lng">
+		</div>
+</div>
+    </div> 
+    <br><br>
+Event type<select name = "category">
+	<option value = "Choose a category">-Select the type of event-</option>
+	<option value = "workshop">Workshop/seminar/talk</option>
+	<option value = "sale">Sale/Resale</option>
+	<option value = "Lost">Lost/Found</option>
+	<option value = "Volunteers">Volunteers</option>
+	<option value = "rental">Rental</option>
+</select>
+
+Department<select name = "department">
+	<option value = "Choose department">-choose department</option>
+	<option value = "wkwsci">wkwsci</option>
+	<option value = "sbs">sbs</option>
+	<option value = "Lost">Lost/Found</option>
+	<option value = "Volunteers">Volunteers</option>
+	<option value = "rental">Rental</option>
+</select>
+<br>
+Contact Number <input type="tel" name="contact number" required placeholder="Enter your contact number" ><br><br>
+Organizer <input type="text"  name="Organizer name" placeholder="Enter the organizer's name" >
+
+<p>
+<label for="curl">Registeration Link</label>
+<input id="curl" type="url" name="url" required  placeholder="Enter the URL">
+</p>
+
+
+Start Date <input type="date" class="form-control rounded" name="sDate" required >
+Time <input type = "time" name = "stime">
+End Date <input type="date" class="form-control rounded" name="eDate" required >
+Time<input type = "time" name = "etime"><br>
+<body>
+
+<input class="file" type="file" name="Image" required id="imgSel">
+
+<div id="textarea" contenteditable = "true"><br>
+
+  <img contenteditable="false" style="width:350px" height="350px" id="myimg" />
+ 
+
+</div>
+<br>
+Event Description<br>
+
+<textarea rows="7" cols="50" name="Description" ></textarea>
+
+
+<input type="button" class="form-control rounded" onclick="myFunction()" value="Reset" >    
+<input type="button" class="form-control rounded" onclick="myFun()" value="save" >  
+<input type="submit" class="form-control rounded"></button>
+</form>
+<br><br>
+ 
+<font color="white">Share</font>
+<div id="share-buttons">
+    
+       
+    <!-- Email -->
+    <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 file:///D:/NTU%20Details/Internet%20Programming/Project/admin.html">
+        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+    </a>
+ 
+    <!-- Facebook -->
+    <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+    </a>
+                
+    <!-- Twitter -->
+    <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+    </a>
+    
+  </div>
+</div>
+<script>
+
+function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13,
+          mapTypeId: 'roadmap'
+        });
+        
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('location');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+          document.getElementById('address').style.display = "block";
+          document.getElementById('location').value = places[0].name;
+          for(var i = 0; i < places[0].address_components.length; i += 1) {
+        	    var addressObj = places[0].address_components[i];
+        	  for (var j = 0; j < addressObj.types.length; j += 1) {
+        	       if (addressObj.types[j] === 'street_number') {
+         	          document.getElementById('name').value = addressObj.long_name
+         	        }
+        	       if (addressObj.types[j] === 'route') {
+         	          document.getElementById('name').value += " "+ addressObj.long_name
+         	        }
+        	       if (addressObj.types[j] === 'country') {
+        	          document.getElementById('Country').value = addressObj.long_name
+        	        }
+        	       if (addressObj.types[j] === 'postal_code') {
+         	          document.getElementById('postal_code').value = addressObj.long_name
+         	        }
+        	       if (addressObj.types[j] === 'locality') {
+         	          document.getElementById('city').value = addressObj.long_name
+         	        }
+        	       if (addressObj.types[j] === 'administrative_area_level_1') {
+          	          document.getElementById('state').value = addressObj.long_name
+          	        }
+        	      }
+          }
+         document.getElementById('lat').value = places[0].geometry.location.lat();
+         document.getElementById('lng').value = places[0].geometry.location.lng();
+
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+ </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCy2SoSrfIWnNBUsDqX10qDxqgVnj_1xM&libraries=places&callback=initAutocomplete"
+         async defer></script>
+</body>
+</html>
