@@ -1,0 +1,72 @@
+@charset "ISO-8859-1";
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Karma", sans-serif
+}
+
+.w3-bar-block .w3-bar-item {
+	padding: 20px
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Arial;
+}
+
+.header {
+	text-align: center;
+	padding: 32px;
+}
+
+.row {
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	-ms-flex-wrap: wrap; /* IE10 */
+	flex-wrap: wrap;
+	padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.columnStyle {
+	-ms-flex: 25%; /* IE10 */
+	flex: 25%;
+	position: relative;
+	max-width: 100%;
+	padding: 0 4px;
+}
+
+.textStyle {
+	position: absolute; /* Position the background text */
+	bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+	background: rgb(0, 0, 0); /* Fallback color */
+	background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+	color: #f1f1f1; /* Grey text */
+	width: 100%; /* Full width */
+	padding: 20px; /* Some padding */
+}
+
+.columnStyle img {
+	margin-top: 8px;
+	vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+	.columnStyle {
+		-ms-flex: 50%;
+		flex: 50%;
+		max-width: 100%;
+	}
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+	.columnStyle {
+		-ms-flex: 100%;
+		flex: 100%;
+		max-width: 100%;
+	}
+}
